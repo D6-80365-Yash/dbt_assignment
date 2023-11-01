@@ -1,0 +1,88 @@
+Summarizing Data with Aggregate Functions.
+1) Write a
+October 3
+
+mysql> select count(Odate) from 
+    -> ORDERS 
+    -> where Odate ='1990-10-03';
++--------------+
+| count(Odate) |
++--------------+
+|            5 |
++--------------+
+1 row in set (0.02 sec)
+
+2) Write a query that counts the number of
+different non-NULL city values in the Customers
+table.
+mysql> select   count( distinct City) from CUSTOMERS;
++-----------------------+
+| count( distinct City) |
++-----------------------+
+|                     4 |
++-----------------------+
+1 row in set (0.02 sec)
+
+
+3) Write a query that selects each customer’s
+smallest order
+mysql> select min(Amt),Cnum from ORDERS group by Cnum order by 2;
++----------+------+
+| min(Amt) | Cnum |
++----------+------+
+|   767.19 | 2001 |
+|  1713.23 | 2002 |
+|  5160.45 | 2003 |
+|    75.75 | 2004 |
+|    47.23 | 2006 |
+|  1900.10 | 2007 |
+|    18.69 | 2008 |
++----------+------+
+7 rows in set (0.00 sec)
+
+4) Write a query that selects the first customer,
+in alphabetical order, whose name begins with G
+mysql> select min(Cname) from 
+    -> CUSTOMERS
+    -> where Cname like 'G%';
++------------+
+| min(Cname) |
++------------+
+| Giovanni   |
++------------+
+1 row in set (0.00 sec)
+5) Write a query that selects the highest rating
+in each city.
+
+mysql> select city, max(RATING) from CUSTOMERS group by City;
++----------+-------------+
+| city     | max(RATING) |
++----------+-------------+
+| London   |         100 |
+| Rome     |         200 |
+| San Jose |         300 |
+| Berlin   |         300 |
++----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> 
+
+
+6) Write a query that counts the number of
+salespeople registering orders for each day. (Ifa
+salesperson has more than one order on a givenday,
+he or she should be counted only once.)
+
+mysql> select  Odate,count( distinct Snum) from ORDERS group by Odate;
++------------+-----------------------+
+| Odate      | count( distinct Snum) |
++------------+-----------------------+
+| 1990-10-03 |                     4 |
+| 1990-10-04 |                     2 |
+| 1990-10-05 |                     1 |
+| 1990-10-06 |                     2 |
++------------+-----------------------+
+4 rows in set (0.00 sec)
+
+
+

@@ -1,0 +1,81 @@
+Formatting Query output.
+1) Assume each salesperson has a 12% commission.
+Write a query on the orders table that will produce
+the order number, the salesperson number, and the
+amount of the salesperson’s commission for that
+order.
+
+mysql> select Onum,Snum,Amt*.12 as 'Commision'from ORDERS;
++------+------+-----------+
+| Onum | Snum | Commision |
++------+------+-----------+
+| 3001 | 1007 |      2.24 |
+| 3003 | 1001 |     92.06 |
+| 3002 | 1004 |    228.01 |
+| 3005 | 1002 |    619.25 |
+| 3006 | 1007 |    131.78 |
+| 3009 | 1003 |    205.59 |
+| 3007 | 1002 |      9.09 |
+| 3008 | 1001 |      5.67 |
+| 3010 | 1002 |    157.19 |
+| 3011 | 1001 |   1187.03 |
++------+------+-----------+
+10 rows in set (0.00 sec)
+
+2) Write a query on the Customers table that will
+find the highest rating in each city. Put the
+output in this form:
+
+For the city (city), the highest rating is :
+(rating).
+
+
+mysql> select  Concat("For the city  ", City) as City  , concat("the heighest rating is :  ",max(RATING)) as RATING from CUSTOMERS group by City;
++------------------------+-------------------------------+
+| City                   | RATING                        |
++------------------------+-------------------------------+
+| For the city  London   | the heighest rating is :  100 |
+| For the city  Rome     | the heighest rating is :  200 |
+| For the city  San Jose | the heighest rating is :  300 |
+| For the city  Berlin   | the heighest rating is :  300 |
++------------------------+-------------------------------+
+4 rows in set, 1 warning (0.00 sec)
+
+mysql> 
+
+
+3) Write a query that lists customers in
+descending order of rating. Output the rating
+field first, followed by the customer’s name and
+number
+
+mysql> select RATING ,Cname,Cname from CUSTOMERS order by RATING desc ;
++--------+----------+----------+
+| RATING | Cname    | Cname    |
++--------+----------+----------+
+|    300 | Grass    | Grass    |
+|    300 | Cisneros | Cisneros |
+|    200 | Giovanni | Giovanni |
+|    200 | Liu      | Liu      |
+|    100 | Hoffman  | Hoffman  |
+|    100 | Clemens  | Clemens  |
+|    100 | Pereira  | Pereira  |
++--------+----------+----------+
+7 rows in set (0.00 sec)
+
+4) Write a query that totals the orders for each
+day and places the results in descending order.
+
+mysql> select Odate, count(Onum) from ORDERS group by Odate;
++------------+-------------+
+| Odate      | count(Onum) |
++------------+-------------+
+| 1990-10-03 |           5 |
+| 1990-10-04 |           2 |
+| 1990-10-05 |           1 |
+| 1990-10-06 |           2 |
++------------+-------------+
+4 rows in set (0.00 sec)
+
+
+

@@ -1,0 +1,42 @@
+1) Write a query that uses a subquery to obtain
+all orders for the customer named Cisneros. Assume
+you do not know his customer number (cnum).
+
+
+
+mysql> select Odate,Amt,Cname,Onum from ORDERS,CUSTOMERS where CUSTOMERS.Cnum=ORDERS.Cnum and CUSTOMERS.Cnum=(select CUSTOMERS.Cnum from CUSTOMERS where Cname='Cisneros');
++------------+---------+----------+------+
+| Odate      | Amt     | Cname    | Onum |
++------------+---------+----------+------+
+| 1990-10-03 |   18.69 | Cisneros | 3001 |
+| 1990-10-03 | 1098.16 | Cisneros | 3006 |
++------------+---------+----------+------+
+
+
+2) Write a query that produces the names and
+ratings of all customers who have above-average
+orders
+
+mysql> select Cname ,RATING from CUSTOMERS,ORDERS where CUSTOMERS.Cnum=ORDERS.Cnum and Amt>(select avg(Amt) from ORDERS);
++---------+--------+
+| Cname   | RATING |
++---------+--------+
+| Liu     |    200 |
+| Clemens |    100 |
+| Clemens |    100 |
++---------+--------+
+3 rows in set (0.00 sec)
+
+
+3) Write a query that selects the total amount in
+orders for each salesperson for whom this total
+is greater than the amount of the largest order
+in the table.
+
+mysql> select sum(Amt) from ORDERS group by Snum having Sum(Amt)>(select max(Amt) from ORDERS);
++----------+
+| sum(Amt) |
++----------+
+| 15382.07 |
++----------+
+1 row in set (0.00 sec)

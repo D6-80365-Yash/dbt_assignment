@@ -1,0 +1,49 @@
+
+
+
+1) Write a query that selects all customers whose
+ratings are equal to or greater than ANY of
+Serres’.
+mysql> select Cname ,RATING from CUSTOMERS where RATING >=any(select RATING from CUSTOMERS,SALESPEOPLE where CUSTOMERS.Snum=SALESPEOPLE.Snum and Sname='Serres');
++----------+--------+
+| Cname    | RATING |
++----------+--------+
+| Giovanni |    200 |
+| Liu      |    200 |
+| Grass    |    300 |
+| Cisneros |    300 |
++----------+--------+
+4 rows in set (0.00 sec)
+
+
+2) Write a query using ANY or ALL that will find
+all salespeople who have no customers located in
+their city.
+
+
+
+
+3) Write a query that selects all orders for
+amounts greater than any for the customers in
+London.
+
+mysql> select distinct Onum,  Amt from ORDERS,CUSTOMERS WHERE  Amt > any ( select  Amt from ORDERS wh
+ere City='London' and CUSTOMERS.Cnum=ORDERS.Cnum);
++------+---------+
+| Onum | Amt     |
++------+---------+
+| 3002 | 1900.10 |
+| 3005 | 5160.45 |
+| 3006 | 1098.16 |
+| 3009 | 1713.23 |
+| 3008 | 4723.00 |
+| 3010 | 1309.95 |
+| 3011 | 9891.88 |
++------+---------+
+7 rows in set (0.01 sec
+
+
+4) Write the above query using MIN or MAX
+
+mysql> select distinct Onum,  Amt from ORDERS WHERE  Amt> any ( select max( Amt) from ORDERS, CUSTOMERS where CUSTOMERS.Cnum=ORDERS.Cnum and  City='London');
+Empty set (0.00 sec
